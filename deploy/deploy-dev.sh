@@ -15,3 +15,5 @@ nohup node app.js > dev.log 2>&1 &
 
 sleep 5
 curl -f http://localhost:3001
+
+echo "Deploying to Dev is Successfully"
