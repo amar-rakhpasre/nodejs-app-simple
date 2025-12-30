@@ -3,10 +3,14 @@ set -e
 
 echo "Deploying to DEV"
 
-rm -rf /opt/dev-app
-mkdir -p /opt/dev-app
-cp -r . /opt/dev-app
-cd /opt/dev-app
+DEV_DIR="$WORKSPACE/dev-app"
+
+echo "Using DEV directory: $DEV_DIR"
+
+rm -rf "echo "$DEV_DIR"
+mkdir -p "$DEV_DIR"
+cp -r . "$DEV_DIR"
+cd "$DEV_DIR"
 
 npm install
 
