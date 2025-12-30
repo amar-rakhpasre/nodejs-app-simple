@@ -9,7 +9,7 @@ echo "Using DEV directory: $DEV_DIR"
 
 rm -rf "$DEV_DIR"
 mkdir -p "$DEV_DIR"
-cp -r . "$DEV_DIR"
+cp -r ../ "$DEV_DIR"
 cd "$DEV_DIR"
 
 npm install
