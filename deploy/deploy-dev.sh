@@ -7,7 +7,7 @@ DEV_DIR="$WORKSPACE/dev-app"
 
 echo "Using DEV directory: $DEV_DIR"
 
-rm -rf "echo "$DEV_DIR"
+rm -rf "$DEV_DIR"
 mkdir -p "$DEV_DIR"
 cp -r . "$DEV_DIR"
 cd "$DEV_DIR"
