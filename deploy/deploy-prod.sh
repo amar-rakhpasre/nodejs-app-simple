@@ -3,10 +3,14 @@ set -e
 
 echo "Deploying to Prod"
 
-rm -rf /opt/prod-app
-mkdir -p /opt/prod-app
-cp -r . /opt/prod-app
-cd /opt/prod-app
+PROD_DIR="$WORKSPACE/prod-app"
+
+echo "Using DEV directory: $PROD_DIR"
+
+rm -rf "$PROD_DIR"
+mkdir -p "$PROD_DIR"
+cp -r . "$PROD_DIR"
+cd "$PROD_DIR"
 
 npm install
 
