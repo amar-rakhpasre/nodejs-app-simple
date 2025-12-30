@@ -1,12 +1,12 @@
 FROM node:16
 
-WORKDIR /app
+# WORKDIR /app
 
-COPY package*.json ./
-RUN npm install
+# COPY package*.json ./
+# RUN npm install
 
-COPY . .
+# COPY . .
 
-EXPOSE 8000
+# EXPOSE 8000
 
-CMD ["npm", "start"]
+# CMD ["npm", "start"]
