@@ -17,6 +17,8 @@ cd "$DEV_DIR"
 
 npm install
 
+npm -v
+
 export PORT=3001
 echo "Starting app on port $PORT"
 
