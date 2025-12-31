@@ -52,4 +52,7 @@ app.get('/index', (req,response) =>{
 const PORT = process.env.PORT || 3000;
 
 //port
-app.listen(PORT, console.log(`App running on port ${PORT}`))
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`App running on port ${PORT}`);
+});
+
