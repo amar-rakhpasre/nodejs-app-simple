@@ -34,7 +34,7 @@ cat prod.log || true
 echo "--------------------------"
 
 # Verify app
-curl -f http://44.211.24.224:3000
+curl -f http://localhost:3000
 
 echo "Deploy to PROD SUCCESSFUL"
 
