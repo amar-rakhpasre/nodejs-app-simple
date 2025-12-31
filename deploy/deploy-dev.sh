@@ -27,7 +27,7 @@ fuser -k 3001/tcp || true
 nohup node index.js > dev.log 2>&1 &
 
 # Give app time to boot
-sleep 10
+sleep 5
 
 echo "---- Application log ----"
 cat dev.log || true
