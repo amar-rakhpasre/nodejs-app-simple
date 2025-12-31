@@ -4,13 +4,10 @@ set -e
 echo "Deploying to DEV"
 
 DEV_DIR="$WORKSPACE/dev-app"
-
 echo "Using DEV directory: $DEV_DIR"
 
-rm -rf "$DEV_DIR"
 mkdir -p "$DEV_DIR"
-# cp -r ../ "$DEV_DIR"
-# Copy project files EXCEPT $DEV_DIR
+
 rsync -av --delete \
   --exclude dev-app \
   --exclude .git \
@@ -21,9 +18,22 @@ cd "$DEV_DIR"
 npm install
 
 export PORT=3001
-nohup node app.js > dev.log 2>&1 &
+echo "Starting app on port $PORT"
 
-sleep 5
+# Kill anything already using port 3001 (VERY IMPORTANT)
+fuser -k 3001/tcp || true
+
+# Start app
+nohup node index.js > dev.log 2>&1 &
+
+# Give app time to boot
+sleep 10
+
+echo "---- Application log ----"
+cat dev.log || true
+echo "--------------------------"
+
+# Verify app
 curl -f http://localhost:3001
 
-echo "Deploying to Dev is Successfully"
+echo "Deploy to DEV SUCCESSFUL"
