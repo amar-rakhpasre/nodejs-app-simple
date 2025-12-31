@@ -57,7 +57,7 @@ app.listen(PORT, '0.0.0.0', () => {
 });
 
 
-router.get('/health', (req, res) => {
+app.get('/health', (req, res) => {
   const data = {
     message: 'UP',
     env: process.env.NODE_ENV || 'unknown',
