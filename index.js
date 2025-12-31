@@ -56,3 +56,28 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`App running on port ${PORT}`);
 });
 
+
+app.get('/health', (req, res) => {
+  const data = {
+        status: 'UP',
+        env: process.env.NODE_ENV || 'unknown',
+        port: process.env.PORT,
+        date: new Date()
+   };
+    
+  res.status(200).send(data);
+
+});
+
+
+router.get('/health', (req, res) => {
+  const data = {
+    message: 'UP',
+    env: process.env.NODE_ENV || 'unknown',
+    port: process.env.PORT,
+    date: new Date()
+  };
+  res.status(200).send(data);
+});
+
+
