@@ -34,6 +34,6 @@ cat dev.log || true
 echo "--------------------------"
 
 # Verify app
-curl -f http://44.211.24.224:3001
+curl -f http://localhost:3001
 
 echo "Deploy to DEV SUCCESSFUL"
