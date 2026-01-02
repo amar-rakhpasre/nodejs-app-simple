@@ -111,6 +111,9 @@ pipeline {
         failure {
             echo 'Pipeline failed'
         }
+        unstable {
+            echo 'I am unstable :/'
+        }
     }
 
 
