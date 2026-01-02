@@ -1,0 +1,117 @@
+pipeline {
+    agent any
+
+    tools {
+        nodejs 'node'
+    }
+
+    environment {
+        APP_NAME = "simple-nodejs-app"
+        DEV_PORT = "3001"
+        PROD_PORT = "3000"
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'npm test || echo "No tests defined"'
+            }
+        }
+
+        stage('Archive Build') {
+            steps {
+                sh '''
+                  rm -rf artifacts
+                  mkdir artifacts
+
+                  tar -czf artifacts/${APP_NAME}-${BUILD_NUMBER}.tar.gz \
+                    index.js \
+                    package.json \
+                    views \
+                    routes || true
+                '''
+                archiveArtifacts artifacts: 'artifacts/*.tar.gz',
+                                 fingerprint: true,
+                                 onlyIfSuccessful: true
+            }
+        }
+
+        stage('Deploy to Development') {
+            steps {
+                sh '''
+                  APP_DIR=$WORKSPACE/dev-app
+                  rm -rf $APP_DIR
+                  mkdir -p $APP_DIR
+
+                  tar -xzf artifacts/${APP_NAME}-${BUILD_NUMBER}.tar.gz -C $APP_DIR
+                  cd $APP_DIR
+
+                  npm install --production
+
+                  export NODE_ENV=development
+                  export PORT=${DEV_PORT}
+
+                  pkill -f "node index.js" || true
+                  nohup node index.js > dev.log 2>&1 &
+
+                  sleep 5
+                  curl -f http://localhost:${DEV_PORT}/health
+                '''
+            }
+        }
+
+        stage('Approve Production Deployment') {
+            steps {
+                input message: 'Deploy same build to production?', ok: 'Approve'
+            }
+        }
+
+        stage('Deploy to Production') {
+            steps {
+                sh '''
+                  APP_DIR=$WORKSPACE/prod-app
+                  rm -rf $APP_DIR
+                  mkdir -p $APP_DIR
+
+                  tar -xzf artifacts/${APP_NAME}-${BUILD_NUMBER}.tar.gz -C $APP_DIR
+                  cd $APP_DIR
+
+                  npm install --production
+
+                  export NODE_ENV=production
+                  export PORT=${PROD_PORT}
+
+                  pkill -f "node index.js" || true
+                  nohup node index.js > prod.log 2>&1 &
+
+                  sleep 5
+                  curl -f http://localhost:${PROD_PORT}/health
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully'
+        }
+        failure {
+            echo 'Pipeline failed'
+        }
+    }
+
+
+}
