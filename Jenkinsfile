@@ -149,14 +149,14 @@ pipeline {
         success {
             echo 'Pipeline completed successfully'
             
-            mail to: 'rakhpasreamar@gmail.com',
-             subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-             body: """\
-            Build succeeded.            
-            Job: ${env.JOB_NAME}
-            Build: #${env.BUILD_NUMBER}
-            URL: ${env.BUILD_URL}
-            """
+            // mail to: 'rakhpasreamar@gmail.com',
+            //  subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            //  body: """\
+            // Build succeeded.            
+            // Job: ${env.JOB_NAME}
+            // Build: #${env.BUILD_NUMBER}
+            // URL: ${env.BUILD_URL}
+            // """
 
             slackSend(
                 channel: '#jenkins-builds',
@@ -168,15 +168,14 @@ pipeline {
         failure {
             echo 'Pipeline failed'
 
-            mail to: 'rakhpasreamar@gmail.com',
-             subject: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-             body: """\
-            Build failed.
-            
-            Job: ${env.JOB_NAME}
-            Build: #${env.BUILD_NUMBER}
-            URL: ${env.BUILD_URL}
-            """
+            // mail to: 'rakhpasreamar@gmail.com',
+            //  subject: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            //  body: """\
+            // Build failed.            
+            // Job: ${env.JOB_NAME}
+            // Build: #${env.BUILD_NUMBER}
+            // URL: ${env.BUILD_URL}
+            // """
 
             slackSend(
                 channel: '#jenkins-builds',
