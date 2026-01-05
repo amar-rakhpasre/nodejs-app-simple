@@ -125,8 +125,10 @@ pipeline {
                         
                         # start or reload app
                         pm2 startOrReload ecosystem.config.js --env production
-                        pm2 save
-                        
+                        pm2 save  
+
+                        sleep 5
+                        curl -f http://localhost:${PROD_PORT}/health
                     '''
 
 
