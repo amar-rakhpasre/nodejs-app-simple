@@ -7,8 +7,8 @@ pipeline {
 
     environment {
         APP_NAME = "simple-nodejs-app"
-        DEV_PORT = "3001"
-        PROD_PORT = "3000"
+        // DEV_PORT = "3001"
+        // PROD_PORT = "3000"
     }
 
     stages {
