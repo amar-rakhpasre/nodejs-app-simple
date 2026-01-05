@@ -105,7 +105,7 @@ pipeline {
                    sh '''
                         set -e
                         
-                        // APP_NAME="myapp"
+                        # APP_NAME="myapp"
                         RELEASE_DIR="/opt/apps/${APP_NAME}/releases/${BUILD_NUMBER}"
                         CURRENT_DIR="/opt/apps/${APP_NAME}/current"
                         
