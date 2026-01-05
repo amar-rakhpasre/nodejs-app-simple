@@ -42,7 +42,8 @@ pipeline {
                     package.json \
                     views \
                     routes || true \
-                    Dockerfile
+                    Dockerfile \
+                    ecosystem.config.js
                 '''
                 archiveArtifacts artifacts: 'artifacts/*.tar.gz',
                                  fingerprint: true,
