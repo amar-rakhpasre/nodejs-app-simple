@@ -102,15 +102,15 @@ pipeline {
                   curl -f http://localhost:${PROD_PORT}/health
                 '''
 
-                sh '''
-                npx kill-port 3000 || true
-                docker build -t prod-app-img:01 .
-                docker stop prod-app-img:01 || true
-                docker rm myapp || true
-                docker images
-                docker run -d -p 3000:3000 --name prod-app-cont prod-app-img:01
-                docker ps
-                '''
+                // sh '''
+                // npx kill-port 3000 || true
+                // docker build -t prod-app-img:01 .
+                // docker stop prod-app-img:01 || true
+                // docker rm myapp || true
+                // docker images
+                // docker run -d -p 3000:3000 --name prod-app-cont prod-app-img:01
+                // docker ps
+                // '''
             }
         }
     }
