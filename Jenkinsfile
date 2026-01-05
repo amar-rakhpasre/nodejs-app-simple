@@ -148,13 +148,57 @@ pipeline {
     post {
         success {
             echo 'Pipeline completed successfully'
+            
+            mail to: 'rakhpasreamar@gmail.com',
+             subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+             body: """\
+            Build succeeded.            
+            Job: ${env.JOB_NAME}
+            Build: #${env.BUILD_NUMBER}
+            URL: ${env.BUILD_URL}
+            """
+
         }
         failure {
             echo 'Pipeline failed'
+
+            mail to: 'rakhpasreamar@gmail.com',
+             subject: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+             body: """\
+            Build failed.
+            
+            Job: ${env.JOB_NAME}
+            Build: #${env.BUILD_NUMBER}
+            URL: ${env.BUILD_URL}
+            """
+
         }
         unstable {
             echo 'I am unstable :/'
+
+            mail to: 'rakhpasreamar@gmail.com',
+             subject: "UNSTABLE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+             body: """\
+            Build is unstable.
+            
+            Job: ${env.JOB_NAME}
+            Build: #${env.BUILD_NUMBER}
+            URL: ${env.BUILD_URL}
+            """
+
         }
+
+        always {
+            mail to: 'rakhpasreamar@gmail.com',
+                 subject: "Jenkins Build Notification: ${currentBuild.fullDisplayName}",
+                 body: """\
+                 Build Status: ${currentBuild.currentResult}
+                 Project: ${env.JOB_NAME}
+                 Build Number: ${env.BUILD_NUMBER}
+                 Build URL: ${env.BUILD_URL}
+                 """
+        }
+
     }
 
 
