@@ -159,7 +159,7 @@ pipeline {
             // """
 
             slackSend(
-                channel: '#jenkins-builds',
+                channel: '#all-test-pord',
                 color: 'good',
                 message: "✅ SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}\n${env.BUILD_URL}"
             )
@@ -178,7 +178,7 @@ pipeline {
             // """
 
             slackSend(
-                channel: '#jenkins-builds',
+                channel: '#all-test-pord',
                 color: 'danger',
                 message: "❌ FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}\n${env.BUILD_URL}"
             )
