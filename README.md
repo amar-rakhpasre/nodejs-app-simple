@@ -12,7 +12,7 @@ Simple-nodejs-app is a simple web application created using [Node.js](https://gi
 - After installation, run ```npm install``` to download and install all the required dependencies.
 - Run ```npm start``` to run the web application.
 
-## Live Preview
+## Live Preview.
 test
 To view a live preview of this application, click [here](https://desolate-coast-53201.herokuapp.com/)
 
