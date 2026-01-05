@@ -103,6 +103,7 @@ pipeline {
                 '''
 
                 sh '''
+                npx kill-port 3000 || true
                 docker build -t prod-app-img:01 .
                 docker stop prod-app-img:01 || true
                 docker rm myapp || true
