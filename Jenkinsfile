@@ -82,25 +82,53 @@ pipeline {
 
         stage('Deploy to Production') {
             steps {
-                sh '''
-                  APP_DIR=$WORKSPACE/prod-app
-                  rm -rf $APP_DIR
-                  mkdir -p $APP_DIR
+                // sh '''
+                //   APP_DIR=$WORKSPACE/prod-app
+                //   rm -rf $APP_DIR
+                //   mkdir -p $APP_DIR
 
-                  tar -xzf artifacts/${APP_NAME}-${BUILD_NUMBER}.tar.gz -C $APP_DIR
-                  cd $APP_DIR
+                //   tar -xzf artifacts/${APP_NAME}-${BUILD_NUMBER}.tar.gz -C $APP_DIR
+                //   cd $APP_DIR
 
-                  npm install --production
+                //   npm install --production
 
-                  export NODE_ENV=production
-                  export PORT=${PROD_PORT}
+                //   export NODE_ENV=production
+                //   export PORT=${PROD_PORT}
 
-                  pkill -f "node index.js" || true
-                  nohup node index.js > prod.log 2>&1 &
+                //   pkill -f "node index.js" || true
+                //   nohup node index.js > prod.log 2>&1 &
 
-                  sleep 5
-                  curl -f http://localhost:${PROD_PORT}/health
-                '''
+                //   sleep 5
+                //   curl -f http://localhost:${PROD_PORT}/health
+                // '''
+
+                   sh '''
+                        set -e
+                        
+                        APP_NAME="myapp"
+                        RELEASE_DIR="/opt/apps/${APP_NAME}/releases/${BUILD_NUMBER}"
+                        CURRENT_DIR="/opt/apps/${APP_NAME}/current"
+                        
+                        echo "Deploying release ${BUILD_NUMBER}"
+                        
+                        # create release directory
+                        mkdir -p $RELEASE_DIR
+                        
+                        # extract artifact directly to release dir
+                        tar -xzf artifacts/${APP_NAME}-${BUILD_NUMBER}.tar.gz -C $RELEASE_DIR
+                        
+                        cd $RELEASE_DIR
+                        npm install --production
+                        
+                        # switch symlink atomically
+                        ln -sfn $RELEASE_DIR $CURRENT_DIR
+                        
+                        # start or reload app
+                        pm2 startOrReload ecosystem.config.js --env production
+                        pm2 save
+                        
+                    '''
+
 
                 // sh '''
                 // npx kill-port 3000 || true
