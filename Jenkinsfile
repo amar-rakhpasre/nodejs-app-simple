@@ -38,11 +38,10 @@ pipeline {
                   mkdir artifacts
 
                   tar -czf artifacts/${APP_NAME}-${BUILD_NUMBER}.tar.gz \
-                    index.js \
-                    package.json \
                     views \
-                    routes || true \
+                    index.js \
                     Dockerfile \
+                    package.json \
                     ecosystem.config.js
                 '''
                 archiveArtifacts artifacts: 'artifacts/*.tar.gz',
