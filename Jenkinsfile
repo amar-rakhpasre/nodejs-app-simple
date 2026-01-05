@@ -158,7 +158,13 @@ pipeline {
             URL: ${env.BUILD_URL}
             """
 
+            slackSend(
+                channel: '#jenkins-builds',
+                color: 'good',
+                message: "✅ SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}\n${env.BUILD_URL}"
+            )
         }
+        
         failure {
             echo 'Pipeline failed'
 
@@ -172,6 +178,11 @@ pipeline {
             URL: ${env.BUILD_URL}
             """
 
+            slackSend(
+                channel: '#jenkins-builds',
+                color: 'danger',
+                message: "❌ FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}\n${env.BUILD_URL}"
+            )
         }
         unstable {
             echo 'I am unstable :/'
